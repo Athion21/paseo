@@ -78,6 +78,7 @@ function useTerminalPanelDescriptor(
 }
 
 function TerminalPanel() {
+  const { t } = useTranslation();
   const { serverId, workspaceId, target, openFileInWorkspace } = usePaneContext();
   const { isWorkspaceFocused, isPaneFocused } = usePaneFocus();
   const workspaceFields = useWorkspaceFields(serverId, workspaceId, (w) => ({
@@ -99,7 +100,7 @@ function TerminalPanel() {
   if (!workspaceDirectory) {
     return (
       <View style={CENTERED_PADDED_STYLE}>
-        <Text>Workspace directory not found.</Text>
+        <Text>{t("panels.file.directoryMissing")}</Text>
       </View>
     );
   }

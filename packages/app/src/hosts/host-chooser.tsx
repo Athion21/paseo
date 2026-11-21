@@ -61,6 +61,7 @@ function matchesHostQuery(host: HostProfile, query: string): boolean {
 }
 
 export function useHostChooser() {
+  const { t } = useTranslation();
   const addHost = useAddHost();
   const hosts = useHosts();
   const localServerId = useLocalDaemonServerId();
@@ -83,13 +84,13 @@ export function useHostChooser() {
       }
 
       open({
-        title: input.title ?? "Choose host",
+        title: input.title ?? t("uiLabels.chooseHost"),
         serverIds: availableHosts.map((host) => host.serverId),
         onChooseHost: input.onChooseHost,
       });
       return true;
     },
-    [hosts, localServerId, open, addHost],
+    [hosts, localServerId, open, addHost, t],
   );
 }
 

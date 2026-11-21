@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useRef, useState, type ReactElement } from "react";
 import { Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
 import { Server } from "lucide-react-native";
 import { StyleSheet, withUnistyles } from "react-native-unistyles";
 import { HOST_STATUS_DOT_SIZE } from "@/components/host-status-dot";
@@ -54,6 +55,7 @@ export function HostFilter({
   triggerTestID,
   hostOptionTestID,
 }: HostFilterProps): ReactElement {
+  const { t } = useTranslation();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const filterAnchorRef = useRef<View>(null);
 
@@ -92,7 +94,7 @@ export function HostFilter({
       anchorRef={filterAnchorRef}
       includeAllHost={includeAllHost}
       searchable={false}
-      title="Filter by host"
+      title={t("uiLabels.filterByHost")}
       desktopPlacement="bottom-start"
       hostOptionTestID={hostOptionTestID}
     >
@@ -103,7 +105,7 @@ export function HostFilter({
           style={triggerStyle}
           testID={triggerTestID}
           accessibilityRole="button"
-          accessibilityLabel={`Filter: ${selectedHostLabel}`}
+          accessibilityLabel={t("uiLabels.filterValue", { label: selectedHostLabel })}
         >
           {showsAllHosts ? (
             <ThemedServer size={ICON_SIZE.sm} uniProps={mutedColorMapping} />

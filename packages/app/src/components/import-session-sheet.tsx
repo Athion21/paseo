@@ -823,7 +823,7 @@ export function ImportSessionSheet({
                 style={filterTriggerStyle}
                 testID="import-session-filter-trigger"
                 accessibilityRole="button"
-                accessibilityLabel={`Filter: ${selectedProviderLabel}`}
+                accessibilityLabel={t("uiLabels.filterValue", { label: selectedProviderLabel })}
               >
                 {selectedProvider === ALL_FILTER_VALUE ? (
                   <Layers size={14} color={theme.colors.foregroundMuted} />
@@ -841,7 +841,7 @@ export function ImportSessionSheet({
                 onSelect={handleFilterSelect}
                 renderOption={renderFilterOption}
                 searchable={false}
-                title="Filter by provider"
+                title={t("uiLabels.filterByProvider")}
                 open={isFilterOpen}
                 onOpenChange={setIsFilterOpen}
                 anchorRef={filterAnchorRef}
@@ -884,6 +884,7 @@ export function ImportSessionSheet({
       importMutation.isError,
       providerErrorRows,
       handleRetryProvider,
+      t,
     ],
   );
   const listFooter = useMemo(

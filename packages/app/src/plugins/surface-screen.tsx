@@ -3,6 +3,7 @@ import type { PluginIcon, PluginScreenParams, PluginScreenProps } from "@getpase
 import type { PluginTheme } from "@getpaseo/plugin";
 import { X } from "lucide-react-native";
 import { useCallback, useMemo, type ComponentType } from "react";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 import { StyleSheet, withUnistyles } from "react-native-unistyles";
 import { HeaderIconBadge } from "@/components/headers/header-icon-badge";
@@ -50,26 +51,24 @@ const pluginThemeMapping = (theme: Theme) => ({
 });
 const ThemedX = withUnistyles(X);
 const ThemedLoadingSpinner = withUnistyles(LoadingSpinner);
-const SURFACE_ERRORS = {
-  offline: "Plugin host is offline.",
-  error: "Could not load plugins. Reconnect to try again.",
-  unavailable: "This plugin surface is unavailable.",
-} as const;
-
 function PluginSurfacePlaceholder({ status }: { status: PluginSurfacePlaceholderStatus }) {
+  const { t } = useTranslation();
   if (status === "loading") {
     return (
       <View
         testID="plugin-surface-loading"
         accessibilityRole="progressbar"
-        accessibilityLabel="Loading plugin"
+        accessibilityLabel={t("uiLabels.loadingPlugin")}
         style={styles.loading}
       >
         <ThemedLoadingSpinner size="large" uniProps={mutedColorMapping} />
       </View>
     );
   }
-  return <Text style={styles.errorText}>{SURFACE_ERRORS[status]}</Text>;
+  let message = t("uiLabels.pluginSurfaceUnavailable");
+  if (status === "offline") message = t("uiLabels.pluginHostOffline");
+  else if (status === "error") message = t("uiLabels.pluginLoadFailed");
+  return <Text style={styles.errorText}>{message}</Text>;
 }
 
 function routeParam(value: string | string[] | undefined): string {
@@ -145,6 +144,7 @@ function PluginHostFilter({
 }
 
 export function PluginSurfaceScreen() {
+  const { t } = useTranslation();
   const routeParams = useLocalSearchParams<{
     serverId?: string | string[];
     pluginId?: string | string[];
@@ -227,18 +227,18 @@ export function PluginSurfaceScreen() {
       <>
         {hostFilter}
         <HeaderToggleButton
-          accessibilityLabel="Close plugin"
+          accessibilityLabel={t("uiLabels.closePlugin")}
           onPress={close}
           testID="plugin-surface-close"
           tooltipKeys={EMPTY_SHORTCUT_KEYS}
-          tooltipLabel="Close"
+          tooltipLabel={t("common.actions.close")}
           tooltipSide="bottom"
         >
           <ThemedX size={18} uniProps={mutedColorMapping} />
         </HeaderToggleButton>
       </>
     ),
-    [close, hostFilter],
+    [close, hostFilter, t],
   );
 
   return (

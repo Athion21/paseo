@@ -225,7 +225,7 @@ function PluginLogsSheet({
   const logs = useFetchQuery({
     queryKey: ["plugin-logs", serverId, pluginId],
     queryFn: () => {
-      if (!client) throw new Error("Plugin host is offline");
+      if (!client) throw new Error(t("settings.plugins.states.offlineTitle"));
       return client.getPluginLogs(pluginId);
     },
     enabled: Boolean(client),

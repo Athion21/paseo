@@ -57,7 +57,7 @@ function resolveEmptyText(input: {
 }): string {
   if (input.isSearching) return input.t("sessions.noMatches");
   if (input.isAllHosts) return input.t("sessions.empty");
-  return "No sessions for this host";
+  return input.t("uiLabels.emptyHostSessions");
 }
 
 export function SessionsScreen() {
@@ -144,7 +144,7 @@ function SessionsScreenContent() {
     return (
       <View style={styles.footer}>
         <Button variant="ghost" onPress={loadMore} disabled={isLoadingMore}>
-          {isLoadingMore ? "Loading..." : t("sessions.actions.loadMore")}
+          {isLoadingMore ? t("common.loading") : t("sessions.actions.loadMore")}
         </Button>
       </View>
     );

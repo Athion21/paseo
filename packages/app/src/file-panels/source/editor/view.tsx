@@ -1,4 +1,5 @@
 import { Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native-unistyles";
 import type { HighlightStyle } from "@getpaseo/highlight";
 import type { WorkspaceFileLocation } from "@/workspace/file-open";
@@ -24,9 +25,10 @@ export function FileEditorView(_props: {
   onVimModeChange(mode: string | null): void;
   onReady(): void;
 }) {
+  const { t } = useTranslation();
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Source editing is available on web and desktop.</Text>
+      <Text style={styles.text}>{t("uiLabels.readOnlyOnDevice")}</Text>
     </View>
   );
 }

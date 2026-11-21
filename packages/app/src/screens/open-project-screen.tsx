@@ -52,12 +52,12 @@ export function OpenProjectScreen() {
 
   const handleOpenProviders = useCallback(() => {
     chooseHost({
-      title: "Choose host",
+      title: t("uiLabels.chooseHost"),
       onChooseHost: (serverId) => {
         router.push(buildSettingsHostSectionRoute(serverId, "providers"));
       },
     });
-  }, [chooseHost, router]);
+  }, [chooseHost, router, t]);
 
   return (
     <View style={styles.container}>

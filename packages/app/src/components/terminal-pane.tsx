@@ -234,7 +234,8 @@ function KeyboardToggleButton({
   iconColor,
   onToggle,
 }: KeyboardToggleButtonProps) {
-  const label = isKeyboardVisible ? "Hide keyboard" : "Show keyboard";
+  const { t } = useTranslation();
+  const label = isKeyboardVisible ? t("uiLabels.hideKeyboard") : t("uiLabels.showKeyboard");
   const Icon = isKeyboardVisible ? KeyboardOffIcon : KeyboardIcon;
   const pressableStyle = useCallback(
     ({ hovered, pressed }: PressableStateCallbackType & { hovered?: boolean }) => [
@@ -877,7 +878,7 @@ export function TerminalPane({
         }
         const response = await client.uploadFile(upload);
         if (!response.file) {
-          throw new Error(response.error ?? "Upload failed");
+          throw new Error(response.error ?? t("uiLabels.uploadFailed"));
         }
         return response.file.path;
       },

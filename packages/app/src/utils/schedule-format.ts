@@ -1,5 +1,6 @@
 import type { ScheduleCadence, ScheduleSummary } from "@getpaseo/protocol/schedule/types";
 import { validateCronExpression } from "@getpaseo/protocol/schedule/cron-expression";
+import { i18n } from "@/i18n/i18next";
 
 export type IntervalUnit = "minutes" | "hours" | "days";
 type CronCadence = Extract<ScheduleCadence, { type: "cron" }>;
@@ -14,14 +15,14 @@ const UNIT_MS: Record<IntervalUnit, number> = {
   days: MS_PER_DAY,
 };
 
-const DAY_NAMES = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
+const DAY_KEYS = [
+  "schedules.daySunday",
+  "schedules.dayMonday",
+  "schedules.dayTuesday",
+  "schedules.dayWednesday",
+  "schedules.dayThursday",
+  "schedules.dayFriday",
+  "schedules.daySaturday",
 ] as const;
 
 export function isNewAgentSchedule(schedule: ScheduleSummary): boolean {
@@ -47,11 +48,12 @@ export function resolveScheduleTitle(schedule: ScheduleSummary): string {
     .split("\n")
     .map((line) => line.trim())
     .find((line) => line.length > 0);
-  return firstPromptLine || `Untitled ${scheduleProductName(schedule).toLowerCase()}`;
-}
-
-function pluralize(value: number, noun: string): string {
-  return value === 1 ? `1 ${noun}` : `${value} ${noun}s`;
+  return (
+    firstPromptLine ||
+    (schedule.target.type === "agent"
+      ? i18n.t("schedules.untitledHeartbeat")
+      : i18n.t("schedules.untitledSchedule"))
+  );
 }
 
 export function everyMsToParts(ms: number): { value: number; unit: IntervalUnit } {
@@ -72,15 +74,23 @@ export function partsToEveryMs(value: number, unit: IntervalUnit): number {
   return normalized * UNIT_MS[unit];
 }
 
-const UNIT_NOUN: Record<IntervalUnit, string> = {
-  minutes: "minute",
-  hours: "hour",
-  days: "day",
+const UNIT_ONE_KEY: Record<IntervalUnit, string> = {
+  minutes: "schedules.unitMinute",
+  hours: "schedules.unitHour",
+  days: "schedules.unitDay",
+};
+const UNIT_MANY_KEY: Record<IntervalUnit, string> = {
+  minutes: "schedules.unitMinutes",
+  hours: "schedules.unitHours",
+  days: "schedules.unitDays",
 };
 
 function formatEvery(everyMs: number): string {
   const { value, unit } = everyMsToParts(everyMs);
-  return `Every ${pluralize(value, UNIT_NOUN[unit])}`;
+  if (value === 1) {
+    return i18n.t("schedules.everyOne", { unit: i18n.t(UNIT_ONE_KEY[unit]) });
+  }
+  return i18n.t("schedules.everyMany", { count: value, unit: i18n.t(UNIT_MANY_KEY[unit]) });
 }
 
 export function formatCadence(cadence: ScheduleCadence): string {
@@ -111,7 +121,7 @@ export function describeCron(cadence: CronCadence): string | null {
   const isWildcardDom = dayOfMonth === "*";
 
   if (minute === "*" && hour === "*" && isWildcardMonth && isWildcardDom && dayOfWeek === "*") {
-    return "Every minute";
+    return i18n.t("schedules.everyMinute");
   }
 
   if (!isLiteralMinute || !isWildcardMonth || !isWildcardDom) {
@@ -123,7 +133,9 @@ export function describeCron(cadence: CronCadence): string | null {
     if (dayOfWeek !== "*") {
       return null;
     }
-    return minuteNum === 0 ? "Every hour" : `Every hour at :${pad2(minuteNum)}`;
+    return minuteNum === 0
+      ? i18n.t("schedules.everyHour")
+      : i18n.t("schedules.everyHourAt", { minute: pad2(minuteNum) });
   }
 
   if (!/^\d+$/.test(hour)) {
@@ -132,22 +144,22 @@ export function describeCron(cadence: CronCadence): string | null {
   const time = `${pad2(Number.parseInt(hour, 10))}:${pad2(minuteNum)}`;
   const timezone = cadence.timezone ?? "UTC";
   const dayLabel = describeCronDay(dayOfWeek);
-  return dayLabel ? `${dayLabel} at ${time} ${timezone}` : null;
+  return dayLabel ? i18n.t("schedules.atTime", { day: dayLabel, time, timezone }) : null;
 }
 
 function describeCronDay(dayOfWeek: string): string | null {
   if (dayOfWeek === "*") {
-    return "Daily";
+    return i18n.t("schedules.dayDaily");
   }
   if (dayOfWeek === "1-5") {
-    return "Weekdays";
+    return i18n.t("schedules.dayWeekdays");
   }
   if (dayOfWeek === "0,6" || dayOfWeek === "6,0") {
-    return "Weekends";
+    return i18n.t("schedules.dayWeekends");
   }
   if (/^\d$/.test(dayOfWeek)) {
-    const day = DAY_NAMES[Number.parseInt(dayOfWeek, 10)];
-    return day ? `${day}s` : null;
+    const key = DAY_KEYS[Number.parseInt(dayOfWeek, 10)];
+    return key ? i18n.t(key) : null;
   }
   return null;
 }
@@ -155,11 +167,13 @@ function describeCronDay(dayOfWeek: string): string | null {
 export function validateCron(expr: string): string | null {
   const trimmed = expr.trim();
   if (!trimmed) {
-    return "Enter a cron expression";
+    return i18n.t("schedules.cronRequired");
   }
 
   const error = validateCronExpression(trimmed);
-  return error?.replace(/^Invalid cron /, "Invalid ") ?? null;
+  if (!error) return null;
+  const detail = error.replace(/^Invalid cron /, "Invalid ");
+  return i18n.t("schedules.cronInvalid", { detail });
 }
 
 function pad2(value: number): string {
@@ -180,17 +194,14 @@ export function formatNextRun(iso: string | null): string {
   }
 
   const diffMs = target - Date.now();
-  if (diffMs <= 0) {
-    return "soon";
-  }
-  if (diffMs < MS_PER_MINUTE) {
-    return "soon";
+  if (diffMs <= 0 || diffMs < MS_PER_MINUTE) {
+    return i18n.t("schedules.soon");
   }
   if (diffMs < MS_PER_HOUR) {
-    return `in ${Math.round(diffMs / MS_PER_MINUTE)}m`;
+    return i18n.t("schedules.inMinutes", { count: Math.round(diffMs / MS_PER_MINUTE) });
   }
   if (diffMs < MS_PER_DAY) {
-    return `in ${Math.round(diffMs / MS_PER_HOUR)}h`;
+    return i18n.t("schedules.inHours", { count: Math.round(diffMs / MS_PER_HOUR) });
   }
-  return `in ${Math.round(diffMs / MS_PER_DAY)}d`;
+  return i18n.t("schedules.inDays", { count: Math.round(diffMs / MS_PER_DAY) });
 }

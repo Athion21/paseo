@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useReducer, useState, type ReactNode } from "react";
 import { Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native-unistyles";
 import type { ScheduleCadence } from "@getpaseo/protocol/schedule/types";
 import type { ControlSize } from "@/components/ui/control-geometry";
@@ -8,7 +9,6 @@ import { SelectField, type SelectFieldOption } from "@/components/ui/select-fiel
 import {
   CADENCE_PRESET_OPTIONS,
   normalizeScheduleFormCadence,
-  resolveCronPresetDisplay,
   resolveCronPresetId,
 } from "@/schedules/schedule-cadence-options";
 import { getDeviceTimeZone } from "@/utils/device-timezone";
@@ -23,12 +23,14 @@ export interface CadenceEditorProps {
   size?: ControlSize;
 }
 
-const PRESET_OPTIONS: SelectFieldOption<string>[] = CADENCE_PRESET_OPTIONS.map((option) => ({
-  id: option.id,
-  value: option.id,
-  label: option.label,
-  testID: `schedule-cadence-preset-${option.id}`,
-}));
+const PRESET_LABEL_KEY: Record<string, string> = {
+  "every-minute": "schedules.presetEveryMinute",
+  "every-hour": "schedules.presetEveryHour",
+  "daily-9": "schedules.presetDaily9",
+  "weekdays-9": "schedules.presetWeekdays9",
+  "mondays-9": "schedules.presetMondays9",
+  custom: "schedules.customCron",
+};
 
 function getCronPreview(expression: string, timezone: string, error: string | null): string | null {
   if (error || !expression) {
@@ -42,6 +44,7 @@ function buildCronCadence(expression: string, timezone: string): CronCadence {
 }
 
 export function CadenceEditor({ value, onChange, error, size = "md" }: CadenceEditorProps) {
+  const { t } = useTranslation();
   const deviceTimeZone = useMemo(getDeviceTimeZone, []);
   const normalizedValue = normalizeScheduleFormCadence(value, deviceTimeZone);
   const [cronText, setCronText] = useState(() => normalizedValue.expression);
@@ -56,7 +59,22 @@ export function CadenceEditor({ value, onChange, error, size = "md" }: CadenceEd
     [cronTimeZone, trimmedCron],
   );
   const selectedPresetId = resolveCronPresetId(currentCadence);
-  const selectedPresetDisplay = resolveCronPresetDisplay(currentCadence);
+  const selectedPresetDisplay = useMemo(
+    () => ({
+      label: t(PRESET_LABEL_KEY[selectedPresetId] ?? "schedules.customCron"),
+    }),
+    [selectedPresetId, t],
+  );
+  const presetOptions = useMemo<SelectFieldOption<string>[]>(
+    () =>
+      CADENCE_PRESET_OPTIONS.map((option) => ({
+        id: option.id,
+        value: option.id,
+        label: t(PRESET_LABEL_KEY[option.id] ?? "schedules.customCron"),
+        testID: `schedule-cadence-preset-${option.id}`,
+      })),
+    [t],
+  );
 
   const handlePresetChange = useCallback(
     (presetId: string) => {
@@ -87,18 +105,18 @@ export function CadenceEditor({ value, onChange, error, size = "md" }: CadenceEd
   }
 
   return (
-    <Field label="Cadence">
+    <Field label={t("schedules.cadence")}>
       <View style={styles.stack}>
         <SelectField
-          label="Cadence"
+          label={t("schedules.cadence")}
           value={selectedPresetId === "custom" ? null : selectedPresetId}
           selectedDisplay={selectedPresetDisplay}
-          options={PRESET_OPTIONS}
+          options={presetOptions}
           onChange={handlePresetChange}
-          placeholder="Select cadence"
-          emptyText="No cadences found"
+          placeholder={t("schedules.selectCadence")}
+          emptyText={t("schedules.noCadences")}
           searchable={false}
-          title="Cadence"
+          title={t("schedules.cadence")}
           size={size}
           triggerTestID="schedule-cadence-preset-trigger"
           field={false}
@@ -107,7 +125,7 @@ export function CadenceEditor({ value, onChange, error, size = "md" }: CadenceEd
         <FormTextInput
           size={size}
           testID="cadence-cron-expression"
-          accessibilityLabel="Cron expression"
+          accessibilityLabel={t("schedules.cronA11y")}
           initialValue={cronText}
           resetKey={`cadence-cron-${fieldResetKey}`}
           onChangeText={handleCronChange}

@@ -207,7 +207,7 @@ export function useNewWorkspaceForm(props: NewWorkspaceFormProps): ReactElement 
       ref={project.anchorRef}
       variant={variant}
       label={t("newWorkspace.fields.project")}
-      accessibilityLabel="Workspace project"
+      accessibilityLabel={t("uiLabels.workspaceProject")}
       tooltip={t("newWorkspace.tooltips.project")}
       shortcutAction="new-workspace"
       icon={projectIcon}
@@ -252,7 +252,7 @@ export function useNewWorkspaceForm(props: NewWorkspaceFormProps): ReactElement 
       ref={isolation.anchorRef}
       variant={variant}
       label={t("newWorkspace.isolation.label")}
-      accessibilityLabel="Workspace isolation"
+      accessibilityLabel={t("uiLabels.workspaceIsolation")}
       tooltip={t("newWorkspace.tooltips.isolation")}
       icon={isWorktree ? branchIcon : folderIcon}
       value={isolationValue}
@@ -293,14 +293,14 @@ export function useNewWorkspaceForm(props: NewWorkspaceFormProps): ReactElement 
         value={project.selectedOptionId}
         onSelect={project.onSelect}
         searchable
-        searchPlaceholder="Search projects"
+        searchPlaceholder={t("uiLabels.searchProjects")}
         title={t("newWorkspace.fields.project")}
         open={project.openState}
         onOpenChange={project.onOpenChange}
         desktopPlacement="bottom-start"
         desktopMinWidth={360}
         anchorRef={project.anchorRef}
-        emptyText="No projects available."
+        emptyText={t("uiLabels.noProjects")}
         renderOption={projectPicker.renderOption}
         footer={projectPicker.footer}
       />

@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from "react";
+import { i18n } from "@/i18n/i18next";
 import { useQueryClient } from "@tanstack/react-query";
 import { usePluginList } from "@/plugins/plugin-list";
 import { useFetchQuery } from "@/data/query";
@@ -24,7 +25,7 @@ export function usePluginDirectory(serverId: string) {
   const query = useFetchQuery({
     queryKey: ["plugin-directory", serverId] as const,
     queryFn: () => {
-      if (!client) throw new Error("Plugin host is offline");
+      if (!client) throw new Error(i18n.t("settings.plugins.states.offlineTitle"));
       return client.listPluginRegistry();
     },
     enabled: ready && supported,
@@ -43,7 +44,7 @@ export function usePluginListing(serverId: string, listingId: string | undefined
   return useFetchQuery({
     queryKey: ["plugin-listing", serverId, listingId] as const,
     queryFn: () => {
-      if (!client || !listingId) throw new Error("Plugin host is offline");
+      if (!client || !listingId) throw new Error(i18n.t("settings.plugins.states.offlineTitle"));
       return client.getRegistryPlugin(listingId);
     },
     enabled: ready && supported && listingId !== undefined,
@@ -61,7 +62,7 @@ export function usePluginUpdates(serverId: string) {
   return useFetchQuery({
     queryKey: pluginUpdatesQueryKey(serverId),
     queryFn: () => {
-      if (!client) throw new Error("Plugin host is offline");
+      if (!client) throw new Error(i18n.t("settings.plugins.states.offlineTitle"));
       return client.previewPluginUpdates();
     },
     enabled: ready && supported,
