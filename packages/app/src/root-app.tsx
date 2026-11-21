@@ -6,6 +6,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { queryClient } from "@/data/query-client";
 import { I18nProvider } from "@/i18n/provider";
+import { PhoneSpeechRuntime } from "@/phone-speech/runtime";
 import { RootErrorBoundary } from "@/components/root-error-boundary";
 
 // Keep Expo's platform filtering, route root, and lazy import configuration.
@@ -29,6 +30,7 @@ export function RootRouter({ context: routes }: Pick<ComponentProps<typeof ExpoR
     <QueryClientProvider client={queryClient}>
       <I18nProvider>
         <SafeAreaProvider>
+          <PhoneSpeechRuntime />
           <RootErrorBoundary key={generation} onReload={reload}>
             <Head.Provider>
               {/* Recreate the router at a safe destination before a failed route can mount. */}

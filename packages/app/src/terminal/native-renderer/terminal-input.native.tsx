@@ -1,4 +1,5 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Platform,
   StyleSheet,
@@ -194,6 +195,7 @@ export function createTerminalTextInputState(): TerminalTextInputState {
 
 export const TerminalInput = forwardRef<TerminalInputHandle, TerminalInputProps>(
   function TerminalInput({ isKeyboardVisible, onFocus, onInput, onTerminalKey, style }, ref) {
+    const { t } = useTranslation();
     const inputRef = useRef<EditingTextInputHandle>(null);
     const isFocusedRef = useRef(false);
     const pendingFocusFrameRef = useRef<number | null>(null);
@@ -344,7 +346,7 @@ export const TerminalInput = forwardRef<TerminalInputHandle, TerminalInputProps>
       // autoCorrect/spellCheck/autoCapitalize being off, not from the layout.
       <TextInput
         ref={inputRef}
-        accessibilityLabel="Terminal input"
+        accessibilityLabel={t("uiLabels.terminalInput")}
         accessible={true}
         autoCapitalize="none"
         autoCorrect={false}

@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { Pressable, Text, type PressableStateCallbackType } from "react-native";
+import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native-unistyles";
 
 export interface TerminalPasteActionProps {
@@ -9,10 +10,12 @@ export interface TerminalPasteActionProps {
 }
 
 export function TerminalPasteAction({ hasClipboardContent, onPaste }: TerminalPasteActionProps) {
+  const { t } = useTranslation();
+  const label = t("uiLabels.paste");
   return (
     <TerminalActionButton
-      label="Paste"
-      accessibilityLabel="Paste"
+      label={label}
+      accessibilityLabel={label}
       testID="terminal-paste"
       disabled={!hasClipboardContent}
       onPress={onPaste}
@@ -30,14 +33,16 @@ export function TerminalFloatingCopyAction({
   hasSelection,
   onCopy,
 }: TerminalFloatingCopyActionProps) {
+  const { t } = useTranslation();
   if (!hasSelection) {
     return null;
   }
+  const label = t("common.actions.copy");
 
   return (
     <TerminalActionButton
-      label="Copy"
-      accessibilityLabel="Copy"
+      label={label}
+      accessibilityLabel={label}
       testID="terminal-copy"
       onPress={onCopy}
       variant="floating"

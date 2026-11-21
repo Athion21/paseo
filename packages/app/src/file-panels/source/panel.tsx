@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { isWeb } from "@/constants/platform";
 import { useAppSettings } from "@/hooks/use-settings";
+import { useDiagnosticDetail } from "@/phone-speech/diagnostic";
 import { confirmDialog } from "@/utils/confirm-dialog";
 import { formatFileSize } from "@/utils/format-file-size";
 import type { Theme } from "@/styles/theme";
@@ -117,6 +118,8 @@ function ReadonlyTextFile({
 }: TextFilePanelProps & { presentation: "highlighted" | "plain" }) {
   const text = useFileText(file);
   const { t } = useTranslation();
+  const loadError = text.status === "error" ? text.error.message : "";
+  const loadDetail = useDiagnosticDetail(loadError);
   const [view, setView] = useTextFileView(params, revision);
   const sourceLocation = useMemo(
     () => ({ path: params.path, lineStart: params.lineStart, lineEnd: params.lineEnd }),
@@ -126,7 +129,7 @@ function ReadonlyTextFile({
   if (text.status === "error") {
     return (
       <View style={styles.centerState}>
-        <Text style={styles.errorText}>{text.error.message || t("panels.file.failedToLoad")}</Text>
+        <Text style={styles.errorText}>{loadDetail || t("panels.file.failedToLoad")}</Text>
       </View>
     );
   }

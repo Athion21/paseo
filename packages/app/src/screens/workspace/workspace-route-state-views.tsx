@@ -5,6 +5,7 @@ import { StyleSheet, withUnistyles } from "react-native-unistyles";
 import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { useDiagnosticDetail } from "@/phone-speech/diagnostic";
 import { formatConnectionStatus } from "@/utils/daemons";
 import type { WorkspaceRouteState } from "@/screens/workspace/workspace-route-state";
 import type { Theme } from "@/styles/theme";
@@ -213,6 +214,7 @@ function WorkspaceUnreachable({
   onManageHost: () => void;
 }) {
   const { t } = useTranslation();
+  const diagnostic = useDiagnosticDetail(state.lastError ?? "");
   const canRetry = state.connectionStatus === "offline" || state.connectionStatus === "error";
 
   return (
@@ -233,11 +235,11 @@ function WorkspaceUnreachable({
           <Tooltip delayDuration={0} enabledOnDesktop enabledOnMobile={false}>
             <TooltipTrigger asChild>
               <Text style={styles.error} numberOfLines={3}>
-                {state.lastError}
+                {diagnostic}
               </Text>
             </TooltipTrigger>
             <TooltipContent side="top" align="center" offset={8}>
-              <Text style={styles.errorTooltip}>{state.lastError}</Text>
+              <Text style={styles.errorTooltip}>{diagnostic}</Text>
             </TooltipContent>
           </Tooltip>
         ) : null}

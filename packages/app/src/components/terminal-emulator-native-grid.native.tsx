@@ -1,4 +1,5 @@
 import Svg, { Path } from "react-native-svg";
+import { useTranslation } from "react-i18next";
 import { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import {
   Keyboard,
@@ -105,6 +106,7 @@ function NativeTerminalEmulator({
   focusRequestToken = 0,
   resizeRequestToken = 0,
 }: TerminalEmulatorProps) {
+  const { t } = useTranslation();
   const terminalRef = useRef<NativeHeadlessTerminal | null>(null);
   const mountInputRef = useRef({ streamKey });
   if (
@@ -762,13 +764,13 @@ function NativeTerminalEmulator({
       </View>
       {isScrolled ? (
         <Pressable
-          accessibilityLabel="Bottom"
+          accessibilityLabel={t("uiLabels.followBottom")}
           accessibilityRole="button"
           onPress={returnToBottom}
           style={styles.followButton}
           testID="terminal-follow-bottom"
         >
-          <Text style={styles.followButtonText}>Bottom</Text>
+          <Text style={styles.followButtonText}>{t("uiLabels.followBottom")}</Text>
         </Pressable>
       ) : null}
     </View>

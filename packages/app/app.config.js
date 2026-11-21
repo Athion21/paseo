@@ -9,7 +9,11 @@ const withPasteInput = require("./plugins/with-paste-input");
 const withAndroidScroll = require("./modules/paseo-scroll/app.plugin");
 const { getNativeReleaseVersion } = require("./native-release-version");
 const appVariant = process.env.APP_VARIANT ?? "production";
+const isPersonalBuild = process.env.PASEO_PERSONAL_BUILD === "1";
 const isFdroidBuild = process.env.PASEO_FDROID_BUILD === "1";
+const cameraPermission = isPersonalBuild
+  ? "允许 $(PRODUCT_NAME) 使用相机扫描配对二维码。"
+  : "Allow $(PRODUCT_NAME) to access your camera to scan pairing QR codes.";
 const isWatchdogBuild = process.env.PASEO_WATCHDOG_BUILD === "1";
 const isProfileBuild = process.env.PASEO_PROFILE_BUILD === "1";
 
@@ -36,8 +40,7 @@ const buildProfile = isFdroidBuild
         [
           "expo-camera",
           {
-            cameraPermission:
-              "Allow $(PRODUCT_NAME) to access your camera to scan pairing QR codes.",
+            cameraPermission,
           },
         ],
       ],
@@ -95,25 +98,29 @@ const variants = {
 };
 
 const variant = variants[appVariant] ?? variants.production;
+const appName = isPersonalBuild ? "Paseo 个人版" : variant.name;
+const packageId = isPersonalBuild ? "sh.paseo.personal" : variant.packageId;
 const nativeReleaseVersion = getNativeReleaseVersion(pkg.version);
 
 export default {
   expo: {
-    name: variant.name,
+    name: appName,
     slug: "voice-mobile",
     version: nativeReleaseVersion.appVersion,
     orientation: "default",
     icon: "./assets/images/icon.png",
-    scheme: "paseo",
+    scheme: isPersonalBuild ? ["paseo", "paseo-personal"] : "paseo",
     userInterfaceStyle: "automatic",
     newArchEnabled: true,
     ios: {
       supportsTablet: true,
       infoPlist: {
-        NSMicrophoneUsageDescription: "This app needs access to the microphone for voice commands.",
+        NSMicrophoneUsageDescription: isPersonalBuild
+          ? "Paseo 个人版需要使用麦克风进行语音输入。"
+          : "This app needs access to the microphone for voice commands.",
         ITSAppUsesNonExemptEncryption: false,
       },
-      bundleIdentifier: variant.packageId,
+      bundleIdentifier: packageId,
       ...(variant.googleServiceInfoPlist
         ? { googleServicesFile: variant.googleServiceInfoPlist }
         : {}),
@@ -130,7 +137,7 @@ export default {
       // Allow HTTP connections for local network hosts (required for release builds)
       usesCleartextTraffic: true,
       permissions: buildProfile.androidPermissions,
-      package: variant.packageId,
+      package: packageId,
       versionCode: nativeReleaseVersion.androidVersionCode,
       ...(variant.googleServicesFile ? { googleServicesFile: variant.googleServicesFile } : {}),
     },
@@ -191,6 +198,7 @@ export default {
       autolinkingModuleResolution: true,
     },
     extra: {
+      personalBuild: isPersonalBuild,
       fdroidBuild: isFdroidBuild,
       profileBuild: isProfileBuild,
       watchdogBuild: isWatchdogBuild,

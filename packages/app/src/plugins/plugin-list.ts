@@ -1,4 +1,5 @@
 import type { PluginListItem } from "@getpaseo/protocol/messages";
+import { i18n } from "@/i18n/i18next";
 import { useFetchQuery } from "@/data/query";
 import { useHostFeature } from "@/runtime/host-features";
 import { useHostRuntimeClient, useHostRuntimeIsConnected } from "@/runtime/host-runtime";
@@ -15,7 +16,7 @@ export function usePluginList(serverId: string, options: { enabled?: boolean } =
   return useFetchQuery({
     queryKey: pluginListQueryKey(serverId),
     queryFn: async () => {
-      if (!client) throw new Error("Plugin host is offline");
+      if (!client) throw new Error(i18n.t("settings.plugins.states.offlineTitle"));
       return client.listPlugins();
     },
     enabled: (options.enabled ?? true) && Boolean(client && connected && supported),

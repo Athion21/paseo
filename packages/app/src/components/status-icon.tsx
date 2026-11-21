@@ -1,5 +1,6 @@
 import { useMemo, type ReactElement, type ReactNode } from "react";
 import { View } from "react-native";
+import { useTranslation } from "react-i18next";
 import { CircleAlert } from "lucide-react-native";
 import { StyleSheet, withUnistyles } from "react-native-unistyles";
 import type { SidebarStateBucket } from "@/utils/sidebar-agent-state";
@@ -35,6 +36,7 @@ export function StatusIcon({
   statusDotBorderColor,
   backdrop,
 }: StatusIconProps): ReactElement {
+  const { t } = useTranslation();
   const bucket = statusBucket;
   const isRunning = bucket === "running";
   let statusDotColor: string | undefined;
@@ -63,7 +65,7 @@ export function StatusIcon({
         <View
           style={styles.statusRing}
           accessibilityRole="progressbar"
-          accessibilityLabel="Agent running"
+          accessibilityLabel={t("uiLabels.agentRunning")}
         >
           <StatusRing backdrop={backdrop} />
         </View>

@@ -182,7 +182,7 @@ export function useWorkspaceTerminals(input: UseWorkspaceTerminalsInput) {
       }
       const payload = await client.killTerminal(terminalId);
       if (!payload.success) {
-        throw new Error("Unable to close terminal");
+        throw new Error(t("uiLabels.unableCloseTerminal"));
       }
       return payload;
     },

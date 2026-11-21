@@ -38,7 +38,11 @@ async function resolveToken(serverId: string): Promise<string | null> {
 
   if (Platform.OS === "android") {
     await Notifications.setNotificationChannelAsync("default", {
-      name: "default",
+      name: Constants.expoConfig?.extra?.personalBuild === true ? "Paseo 个人版" : "default",
+      description:
+        Constants.expoConfig?.extra?.personalBuild === true
+          ? "助手完成或需要权限时的提醒。标题由主机生成，可能仍是英文。"
+          : undefined,
       importance: Notifications.AndroidImportance.DEFAULT,
     });
   }

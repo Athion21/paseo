@@ -37,7 +37,7 @@ export function TextFileToolbar({
   vimMode?: string | null;
   conflict?: FileConflictAlertState | null;
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const views = [
     {
       value: "preview" as const,
@@ -102,7 +102,9 @@ export function TextFileToolbar({
                 style={styles.whisper}
                 accessibilityLabel={t("panels.file.editor.cursor", cursor)}
               >
-                Ln {cursor.line}, Col {cursor.column}
+                {i18n.language === "zh-CN"
+                  ? t("panels.file.editor.cursor", cursor)
+                  : `Ln ${cursor.line}, Col ${cursor.column}`}
               </Text>
             ) : null}
           </View>

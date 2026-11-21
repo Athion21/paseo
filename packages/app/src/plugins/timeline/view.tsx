@@ -3,6 +3,7 @@ import type { PluginTimelineItemProps } from "@getpaseo/plugin/client";
 import type { PluginTheme } from "@getpaseo/plugin";
 import React, { type ComponentType, useMemo } from "react";
 import { Text } from "react-native";
+import { useTranslation } from "react-i18next";
 import { StyleSheet, withUnistyles } from "react-native-unistyles";
 import { useIsCompactFormFactor } from "@/constants/layout";
 import { useHostRuntimeClient, useHosts } from "@/runtime/host-runtime";
@@ -18,7 +19,8 @@ import { resolvePluginPlatform } from "../platform";
 const pluginThemeMapping = (theme: Theme) => ({ theme: toPluginTheme(theme) });
 
 function TimelineItemUnavailable() {
-  return <Text style={styles.unavailable}>Plugin timeline item unavailable.</Text>;
+  const { t } = useTranslation();
+  return <Text style={styles.unavailable}>{t("uiLabels.timelineUnavailable")}</Text>;
 }
 
 function parseRendererData(

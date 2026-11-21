@@ -18,6 +18,7 @@ import {
 import type { TurnFooterHost } from "./layout";
 import { AssistantForkMenu } from "@/components/assistant-fork-menu";
 import { SyncedLoader } from "@/components/synced-loader";
+import { PhoneSpeechTurnButton } from "@/phone-speech/turn-button";
 import { useRetainedPanelActive } from "@/components/retained-panel";
 
 const ThemedSyncedLoader = withUnistyles(SyncedLoader);
@@ -200,6 +201,7 @@ function CompletedTurnFooter({
   );
   return (
     <View style={stylesheet.turnFooterSlot}>
+      <PhoneSpeechTurnButton items={items} startIndex={startIndex} getText={getContent} />
       <AssistantTurnFooter
         getContent={items[startIndex]?.kind === "assistant_message" ? getContent : undefined}
         completedAt={timing?.completedAt}

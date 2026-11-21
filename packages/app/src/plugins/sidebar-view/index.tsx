@@ -7,6 +7,7 @@ import { useMemo, useCallback, type ReactNode } from "react";
 import { Text, View } from "react-native";
 import { StyleSheet, withUnistyles } from "react-native-unistyles";
 import { Button } from "@/components/ui/button";
+import { useDiagnosticDetail } from "@/phone-speech/diagnostic";
 import { useIsCompactFormFactor } from "@/constants/layout";
 import { useToast } from "@/contexts/toast-context";
 import {
@@ -27,6 +28,11 @@ import { sidebarViews, type SidebarViewEntry } from "./catalog";
 import { useSidebarViewSelection } from "./selection";
 
 const source = createPluginClientStateSource();
+function SidebarDiagnostic({ message }: { message: string }) {
+  const detail = useDiagnosticDetail(message);
+  return <Text style={styles.text}>{detail}</Text>;
+}
+
 const themeMapping = (theme: Theme) => ({ theme: toPluginTheme(theme) });
 
 export function SidebarViewSlot({ children, dismiss }: { children: ReactNode; dismiss(): void }) {
@@ -41,7 +47,7 @@ export function SidebarViewSlot({ children, dismiss }: { children: ReactNode; di
         <Button onPress={restoreDefault} disabled={pending}>
           {t("sidebar.view.useDefault")}
         </Button>
-        {error ? <Text style={styles.text}>{error.message}</Text> : null}
+        {error ? <SidebarDiagnostic message={error.message} /> : null}
       </View>
     ),
     [restoreDefault, pending, error, t],

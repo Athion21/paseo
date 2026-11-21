@@ -1063,7 +1063,7 @@ export function NewWorkspaceScreen({
     ],
     queryFn: async () => {
       if (!selectedSourceDirectory) {
-        throw new Error("Choose a project");
+        throw new Error(t("uiLabels.chooseProject"));
       }
       const connectedClient = withConnectedClient();
       return connectedClient.getBranchSuggestions({
@@ -1236,10 +1236,10 @@ export function NewWorkspaceScreen({
         return creationResult;
       }
       if (!selectedProject) {
-        throw new Error("Choose a project");
+        throw new Error(t("uiLabels.chooseProject"));
       }
       if (!selectedSourceDirectory) {
-        throw new Error("Choose a host for this project");
+        throw new Error(t("uiLabels.chooseHostForProject"));
       }
       const connectedClient = withConnectedClient();
       const createsWorktree = !supportsWorkspaceMultiplicity || effectiveIsolation === "worktree";

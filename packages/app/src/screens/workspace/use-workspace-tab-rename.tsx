@@ -68,7 +68,7 @@ export function useWorkspaceTabRename(
           title: trimmed,
         });
         if (!result.success) {
-          throw new Error(result.error ?? "Failed to rename terminal");
+          throw new Error(result.error ?? t("uiLabels.renameTerminalFailed"));
         }
         void queryClient.invalidateQueries({ queryKey: terminalsQueryKey });
         return;
