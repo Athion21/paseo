@@ -301,6 +301,8 @@ export const ko: TranslationResources = {
     tooManyMatches: "일치 항목이 너무 많습니다 — 검색 범위를 좁히세요",
     hostLoadFailed: "{{host}}: 기록을 불러오지 못했습니다",
     searchPlaceholder: "기록 검색",
+    loadFailed: "세션을 불러오지 못했습니다",
+    tryAgain: "다시 시도",
     actions: {
       loadMore: "더 불러오기",
       clearSearch: "검색 지우기",
@@ -1277,6 +1279,7 @@ export const ko: TranslationResources = {
       noHost: "호스트 없음",
       switchTitle: "호스트 전환",
       searchPlaceholder: "호스트 검색...",
+      noMatches: "일치하는 호스트가 없습니다",
     },
     actions: {
       addProject: "프로젝트 추가",
@@ -3190,6 +3193,43 @@ export const ko: TranslationResources = {
         saving: "저장하는 중...",
         cancel: "취소",
       },
+    },
+  },
+  phone: {
+    speech: {
+      title: "답변 읽어 주기",
+      enabled: "완성된 답변 자동 읽기",
+      hint: "지금 보고 있는 대화에서 작성이 끝난 어시스턴트 답변만 읽습니다. 끄면 즉시 멈춥니다.",
+      privacy:
+        "읽기는 이 휴대전화 스피커로 어시스턴트 답변을 재생합니다. 주변 사람이 들을 수 있습니다. 답변 본문은 로그에 쓰지 않습니다. 오프라인 중국어 음성을 사용하며, 앱을 떠나거나 화면을 잠그면 멈춥니다.",
+      replay: "읽기",
+      stop: "중지",
+      missingTitle: "오프라인 중국어 음성 없음",
+      missing:
+        "이 휴대전화에 오프라인 간체 중국어 음성이 없습니다. 시스템 텍스트 음성 변환 설정에서 설치한 뒤 다시 시도하세요. 네트워크 음성이나 유료 서비스로 바꾸지 않습니다.",
+      nothingToRead: "이 답변에는 읽을 본문이 없습니다.",
+      failed: "이 답변을 읽지 못했습니다. {{detail}}",
+    },
+    markdown: {
+      edit: "편집",
+      preview: "미리보기",
+      saveAs: "휴대전화에 저장",
+      saving: "저장 중…",
+      saved: "이 휴대전화에 저장했습니다",
+      cancelled: "저장을 취소했습니다. 편집 내용은 남아 있습니다.",
+      failed: "휴대전화에 저장하지 못했습니다. 편집 내용은 남아 있습니다. {{detail}}",
+      busy: "저장 창이 이미 열려 있습니다. 편집 내용은 남아 있습니다.",
+      unavailable: "시스템 저장 창을 열 수 없습니다. 편집 내용은 남아 있습니다.",
+      remoteChanged: "호스트의 파일이 바뀌었습니다. 저장하지 않은 편집은 남아 있습니다.",
+      fallbackName: "notes.md",
+    },
+    diagnostics: {
+      summary: "호스트가 진단 정보를 반환했습니다",
+      detail: "호스트 원문: {{detail}}",
+    },
+    about: {
+      title: "개인 빌드",
+      body: "비공식 개인 빌드이며 공식 Paseo와 함께 설치할 수 있습니다. Paseo 0.16.2를 기반으로 하며 원래 라이선스가 적용됩니다. 알림 제목은 0.16.2 호스트가 만들어 영어로 남을 수 있습니다.",
     },
   },
 };

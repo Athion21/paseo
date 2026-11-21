@@ -35,6 +35,7 @@ import {
   useSessionStore,
   type SessionState,
 } from "@/stores/session-store";
+import { publishLiveTurn } from "@/phone-speech/live-turn";
 import { sendOsNotification } from "@/utils/os-notifications";
 import { getIsAppActivelyVisible, getIsAppVisible } from "@/utils/app-visibility";
 import {
@@ -368,6 +369,18 @@ function SessionProviderInternal({ children, serverId, client }: SessionProvider
         voiceRuntime?.onTurnEvent(serverId, agentId, event.type);
       }
       sync.applyStreamEvent(agentId, { event, seq, epoch, timestamp: new Date(timestamp) });
+      if (
+        event.type === "turn_completed" ||
+        event.type === "turn_failed" ||
+        event.type === "turn_canceled"
+      ) {
+        publishLiveTurn({
+          serverId,
+          agentId,
+          type: event.type,
+          turnId: event.turnId,
+        });
+      }
 
       // NOTE: We don't update lastActivityAt on every stream event to prevent
       // cascading rerenders. The agent_update handler updates agent.lastActivityAt

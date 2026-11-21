@@ -299,6 +299,8 @@ export const en = {
     tooManyMatches: "Too many matches — narrow your search",
     hostLoadFailed: "{{host}}: Could not load history",
     searchPlaceholder: "Search history",
+    loadFailed: "Unable to load sessions",
+    tryAgain: "Try again",
     actions: {
       loadMore: "Load more",
       clearSearch: "Clear search",
@@ -1280,6 +1282,7 @@ export const en = {
       noHost: "No host",
       switchTitle: "Switch host",
       searchPlaceholder: "Search hosts...",
+      noMatches: "No matching hosts",
     },
     actions: {
       addProject: "Add project",
@@ -3307,6 +3310,43 @@ export const en = {
         saving: "Saving...",
         cancel: "Cancel",
       },
+    },
+  },
+  phone: {
+    speech: {
+      title: "Read replies aloud",
+      enabled: "Read finished replies aloud",
+      hint: "Only the finished assistant reply in the chat you are looking at. Turning this off stops speech immediately.",
+      privacy:
+        "Reading aloud plays the assistant reply through this phone's speaker. People nearby can hear it. Reply text is not written to logs. This uses the phone's offline Simplified Chinese voice and stops when you leave the app or lock the screen.",
+      replay: "Read aloud",
+      stop: "Stop reading",
+      missingTitle: "Offline Chinese voice missing",
+      missing:
+        "This phone has no offline Simplified Chinese voice. Install one in system Text-to-speech settings, then try again. This app will not switch to a network voice or a paid service.",
+      nothingToRead: "This reply has no prose to read aloud.",
+      failed: "Could not read this reply. {{detail}}",
+    },
+    markdown: {
+      edit: "Edit",
+      preview: "Preview",
+      saveAs: "Save to phone",
+      saving: "Saving…",
+      saved: "Saved on this phone",
+      cancelled: "Save cancelled. Your edits are still here.",
+      failed: "Could not save to this phone. Your edits are still here. {{detail}}",
+      busy: "A save window is already open. Your edits are still here.",
+      unavailable: "The system save window is unavailable. Your edits are still here.",
+      remoteChanged: "The copy on the host changed. Your unsaved edits are still here.",
+      fallbackName: "notes.md",
+    },
+    diagnostics: {
+      summary: "The host returned a diagnostic",
+      detail: "Original host message: {{detail}}",
+    },
+    about: {
+      title: "Personal build",
+      body: "Unofficial personal build. It can be installed next to official Paseo. Based on Paseo 0.16.2. The original license still applies. Notification titles are written by the 0.16.2 host and may stay in English.",
     },
   },
 } as const;

@@ -15,6 +15,7 @@ import React, {
   useSyncExternalStore,
 } from "react";
 import { useTranslation } from "react-i18next";
+import { useDiagnosticDetail } from "@/phone-speech/diagnostic";
 import { StyleSheet as RNStyleSheet, Text, View } from "react-native";
 import { StyleSheet, withUnistyles } from "react-native-unistyles";
 import invariant from "tiny-invariant";
@@ -1729,6 +1730,7 @@ function AgentSessionUnavailableState({
   isUnknownDaemon?: boolean;
   t: TFunction;
 }) {
+  const diagnostic = useDiagnosticDetail(lastError ?? "");
   if (isUnknownDaemon) {
     return (
       <View style={styles.container}>
@@ -1770,7 +1772,7 @@ function AgentSessionUnavailableState({
             <Text style={styles.offlineDescription}>
               {t("agentPanel.unavailable.showAgainWhenReachable")}
             </Text>
-            {lastError ? <Text style={styles.offlineDetails}>{lastError}</Text> : null}
+            {lastError ? <Text style={styles.offlineDetails}>{diagnostic}</Text> : null}
           </>
         )}
       </View>

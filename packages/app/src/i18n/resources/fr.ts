@@ -305,6 +305,8 @@ export const fr: TranslationResources = {
     tooManyMatches: "Trop de résultats — affinez la recherche",
     hostLoadFailed: "{{host}} : impossible de charger l’historique",
     searchPlaceholder: "Rechercher dans l’historique",
+    loadFailed: "Impossible de charger les sessions",
+    tryAgain: "Réessayer",
     actions: {
       loadMore: "Charger plus",
       clearSearch: "Effacer la recherche",
@@ -1300,6 +1302,7 @@ export const fr: TranslationResources = {
       noHost: "Aucun hôte",
       switchTitle: "Changer d’hôte",
       searchPlaceholder: "Rechercher des hôtes…",
+      noMatches: "Aucun hôte correspondant",
     },
     actions: {
       addProject: "Ajouter un projet",
@@ -3248,6 +3251,46 @@ export const fr: TranslationResources = {
         saving: "Enregistrement…",
         cancel: "Annuler",
       },
+    },
+  },
+  phone: {
+    speech: {
+      title: "Lire les réponses",
+      enabled: "Lire les réponses terminées",
+      hint: "Lit seulement la réponse terminée de l’assistant dans la conversation affichée. Le désactiver arrête immédiatement la lecture.",
+      privacy:
+        "La lecture passe par le haut-parleur de ce téléphone. Les personnes à proximité peuvent l’entendre. Le texte n’est pas écrit dans les journaux. Elle utilise la voix chinoise hors ligne et s’arrête si vous quittez l’application ou verrouillez l’écran.",
+      replay: "Lire",
+      stop: "Arrêter",
+      missingTitle: "Voix chinoise hors ligne absente",
+      missing:
+        "Ce téléphone n’a pas de voix chinoise simplifiée hors ligne. Installez-en une dans les paramètres de synthèse vocale, puis réessayez. L’application ne bascule pas vers une voix réseau ou un service payant.",
+      nothingToRead: "Cette réponse n’a pas de prose à lire.",
+      failed: "Impossible de lire cette réponse. {{detail}}",
+    },
+    markdown: {
+      edit: "Modifier",
+      preview: "Aperçu",
+      saveAs: "Enregistrer sur le téléphone",
+      saving: "Enregistrement…",
+      saved: "Enregistré sur ce téléphone",
+      cancelled: "Enregistrement annulé. Vos modifications sont conservées.",
+      failed:
+        "Enregistrement impossible sur ce téléphone. Vos modifications sont conservées. {{detail}}",
+      busy: "Une fenêtre d’enregistrement est déjà ouverte. Vos modifications sont conservées.",
+      unavailable:
+        "La fenêtre d’enregistrement du système est indisponible. Vos modifications sont conservées.",
+      remoteChanged:
+        "La copie sur l’hôte a changé. Vos modifications non enregistrées sont conservées.",
+      fallbackName: "notes.md",
+    },
+    diagnostics: {
+      summary: "L’hôte a renvoyé un diagnostic",
+      detail: "Message d’origine de l’hôte : {{detail}}",
+    },
+    about: {
+      title: "Version personnelle",
+      body: "Version personnelle non officielle. Elle s’installe à côté de Paseo officiel. Basée sur Paseo 0.16.2, la licence d’origine s’applique. Les titres de notification viennent de l’hôte 0.16.2 et peuvent rester en anglais.",
     },
   },
 };

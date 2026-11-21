@@ -300,6 +300,8 @@ export const zhCN: TranslationResources = {
     tooManyMatches: "匹配过多 — 请缩小搜索范围",
     hostLoadFailed: "{{host}}：无法加载历史",
     searchPlaceholder: "搜索历史",
+    loadFailed: "无法加载会话",
+    tryAgain: "重试",
     actions: {
       loadMore: "加载更多",
       clearSearch: "清除搜索",
@@ -1262,6 +1264,7 @@ export const zhCN: TranslationResources = {
       noHost: "没有 Host",
       switchTitle: "切换 Host",
       searchPlaceholder: "搜索 Hosts...",
+      noMatches: "没有匹配的主机",
     },
     actions: {
       addProject: "添加 project",
@@ -3135,6 +3138,43 @@ export const zhCN: TranslationResources = {
         saving: "正在保存...",
         cancel: "取消",
       },
+    },
+  },
+  phone: {
+    speech: {
+      title: "朗读回复",
+      enabled: "自动朗读完整回复",
+      hint: "只朗读你正在看的对话里已经写完的助手回复。关闭后会立刻停止。",
+      privacy:
+        "朗读会通过这台手机的扬声器念出助手回复，旁边的人听得见。回复正文不会写入日志。只使用手机里的离线简体中文语音，离开应用或锁屏后会停止。",
+      replay: "朗读",
+      stop: "停止",
+      missingTitle: "没有离线中文语音",
+      missing:
+        "这台手机没有可用的离线简体中文语音。请到系统设置的“文字转语音”里安装离线中文语音包后再试。本应用不会改用网络语音或付费服务。",
+      nothingToRead: "这条回复里没有可以朗读的正文。",
+      failed: "没能朗读这条回复。{{detail}}",
+    },
+    markdown: {
+      edit: "编辑",
+      preview: "预览",
+      saveAs: "另存到手机",
+      saving: "正在保存…",
+      saved: "已保存到这台手机",
+      cancelled: "已取消保存。编辑内容还在。",
+      failed: "没能保存到手机。编辑内容还在。{{detail}}",
+      busy: "已经有一个保存窗口开着。编辑内容还在。",
+      unavailable: "系统保存窗口暂时打不开。编辑内容还在。",
+      remoteChanged: "主机上的文件变了。你还没保存的编辑内容仍在。",
+      fallbackName: "笔记.md",
+    },
+    diagnostics: {
+      summary: "主机返回了诊断信息",
+      detail: "主机原始信息：{{detail}}",
+    },
+    about: {
+      title: "个人构建",
+      body: "非官方个人构建，可以和官方 Paseo 同时安装。基于 Paseo 0.16.2，原许可证仍然有效。系统通知标题由 0.16.2 主机生成，可能仍是英文。",
     },
   },
 };

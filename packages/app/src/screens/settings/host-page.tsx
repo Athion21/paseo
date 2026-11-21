@@ -36,6 +36,7 @@ import {
 import { startDesktopDaemon, stopDesktopDaemon } from "@/desktop/daemon/desktop-daemon";
 import { LocalDaemonSection } from "@/desktop/components/desktop-updates-section";
 import { useDaemonStatus } from "@/desktop/hooks/use-daemon-status";
+import { useDiagnosticSummary } from "@/phone-speech/diagnostic";
 import { useDesktopSettings } from "@/desktop/settings/desktop-settings";
 import { PairDeviceModal } from "@/desktop/components/pair-device-modal";
 import { useDaemonConfig } from "@/hooks/use-daemon-config";
@@ -234,14 +235,17 @@ function HostConnectionError({ serverId }: { serverId: string }) {
   const lastError = snapshot?.lastError ?? null;
   const connectionError =
     typeof lastError === "string" && lastError.trim().length > 0 ? lastError.trim() : null;
+  const diagnostic = useDiagnosticSummary(connectionError ?? "");
   if (!connectionError) return null;
+  const guidance = snapshot?.authFailureReason ? t("settings.host.password.guidance") : undefined;
+  const description = [diagnostic.description, guidance].filter(Boolean).join("\n") || undefined;
   return (
     <View style={styles.connectionError}>
       <InlineAlert
         size="sm"
         variant="error"
-        title={connectionError}
-        description={snapshot?.authFailureReason ? t("settings.host.password.guidance") : undefined}
+        title={diagnostic.title}
+        description={description}
         testID="host-connection-error"
       />
     </View>

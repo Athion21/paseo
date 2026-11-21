@@ -305,6 +305,8 @@ export const es: TranslationResources = {
     tooManyMatches: "Demasiadas coincidencias: acota la búsqueda",
     hostLoadFailed: "{{host}}: No se pudo cargar el historial",
     searchPlaceholder: "Buscar en el historial",
+    loadFailed: "No se pudieron cargar las sesiones",
+    tryAgain: "Reintentar",
     actions: {
       loadMore: "Cargar más",
       clearSearch: "Borrar búsqueda",
@@ -1306,6 +1308,7 @@ export const es: TranslationResources = {
       noHost: "Sin anfitrión",
       switchTitle: "Cambiar de anfitrión",
       searchPlaceholder: "Buscar hosts...",
+      noMatches: "No hay hosts coincidentes",
     },
     actions: {
       addProject: "Agregar proyecto",
@@ -3238,6 +3241,44 @@ export const es: TranslationResources = {
         saving: "Guardando...",
         cancel: "Cancelar",
       },
+    },
+  },
+  phone: {
+    speech: {
+      title: "Leer respuestas",
+      enabled: "Leer las respuestas terminadas",
+      hint: "Solo lee la respuesta terminada del asistente en el chat que estás viendo. Al desactivarlo, la lectura se detiene de inmediato.",
+      privacy:
+        "La lectura suena por el altavoz de este teléfono. Quien esté cerca puede oírla. El texto no se escribe en los registros. Usa la voz china sin conexión y se detiene al salir de la app o bloquear la pantalla.",
+      replay: "Leer",
+      stop: "Detener",
+      missingTitle: "Falta la voz china sin conexión",
+      missing:
+        "Este teléfono no tiene una voz de chino simplificado sin conexión. Instálala en los ajustes de texto a voz y vuelve a intentarlo. La app no cambia a una voz de red ni a un servicio de pago.",
+      nothingToRead: "Esta respuesta no tiene prosa para leer.",
+      failed: "No se pudo leer esta respuesta. {{detail}}",
+    },
+    markdown: {
+      edit: "Editar",
+      preview: "Vista previa",
+      saveAs: "Guardar en el teléfono",
+      saving: "Guardando…",
+      saved: "Guardado en este teléfono",
+      cancelled: "Guardado cancelado. Tus cambios siguen aquí.",
+      failed: "No se pudo guardar en el teléfono. Tus cambios siguen aquí. {{detail}}",
+      busy: "Ya hay una ventana de guardado abierta. Tus cambios siguen aquí.",
+      unavailable:
+        "La ventana de guardado del sistema no está disponible. Tus cambios siguen aquí.",
+      remoteChanged: "La copia del host cambió. Tus cambios sin guardar siguen aquí.",
+      fallbackName: "notes.md",
+    },
+    diagnostics: {
+      summary: "El host devolvió un diagnóstico",
+      detail: "Mensaje original del host: {{detail}}",
+    },
+    about: {
+      title: "Compilación personal",
+      body: "Compilación personal no oficial. Puede instalarse junto a Paseo oficial. Basada en Paseo 0.16.2; se mantiene la licencia original. Los títulos de las notificaciones los escribe el host 0.16.2 y pueden seguir en inglés.",
     },
   },
 };

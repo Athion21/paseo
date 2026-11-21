@@ -4,6 +4,7 @@ import { I18nextProvider } from "react-i18next";
 import { isWeb } from "@/constants/platform";
 import { useAppSettings } from "@/hooks/use-settings";
 import { i18n } from "./i18next";
+import { isPersonalAndroidBuild } from "@/phone-speech/personal-build";
 import { resolveSupportedLocale } from "./locales";
 import { ensureI18nLanguageForRender } from "./sync-language";
 
@@ -22,7 +23,10 @@ function getSystemLocales(): string[] {
 export function I18nProvider({ children }: I18nProviderProps) {
   const { settings } = useAppSettings();
   const systemLocales = useMemo(() => getSystemLocales(), []);
-  const locale = resolveSupportedLocale(settings.language, systemLocales);
+  const locale =
+    isPersonalAndroidBuild() && settings.language === "system"
+      ? "zh-CN"
+      : resolveSupportedLocale(settings.language, systemLocales);
 
   ensureI18nLanguageForRender(locale, i18n);
 

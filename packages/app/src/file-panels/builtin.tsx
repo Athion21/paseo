@@ -1,11 +1,13 @@
 import { useWorkspace, useFileUrl, type PluginFilePanelProps } from "@getpaseo/plugin/client";
 import { useCallback, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Platform, ScrollView, Text, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { ZoomableImage } from "@/components/zoomable-viewport/image";
+import { useDiagnosticDetail } from "@/phone-speech/diagnostic";
 import { useSessionStore } from "@/stores/session-store";
 import { FileHtmlPreview } from "./html-preview";
 import { FilePanelLoading } from "./loading";
+import { PhoneMarkdownPanel } from "./phone-markdown/panel";
 import { FileMarkdownPreview } from "./markdown-preview";
 import { TextFilePanel, type TextFilePreviewProps } from "./source/panel";
 import type { RenderingFilePanel, SourceFilePanel } from "./catalog";
@@ -17,6 +19,7 @@ function SourcePanel(props: PluginFilePanelProps) {
 
 /** Markdown: the text file panel with the rendered document as its Preview. */
 function MarkdownPanel(props: PluginFilePanelProps) {
+  if (Platform.OS === "android") return <PhoneMarkdownPanel {...props} />;
   return <TextFilePanel {...props} preview={MarkdownPreview} />;
 }
 
@@ -66,9 +69,10 @@ function ImagePanel({ file }: PluginFilePanelProps) {
 }
 
 function FilePanelError({ message }: { message: string }) {
+  const detail = useDiagnosticDetail(message);
   return (
     <View style={styles.centerState}>
-      <Text style={styles.errorText}>{message}</Text>
+      <Text style={styles.errorText}>{detail}</Text>
     </View>
   );
 }

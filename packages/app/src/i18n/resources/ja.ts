@@ -305,6 +305,8 @@ export const ja: TranslationResources = {
     tooManyMatches: "一致が多すぎます — 検索条件を絞ってください",
     hostLoadFailed: "{{host}}: 履歴を読み込めませんでした",
     searchPlaceholder: "履歴を検索",
+    loadFailed: "セッションを読み込めません",
+    tryAgain: "再試行",
     actions: {
       loadMore: "さらに読み込む",
       clearSearch: "検索をクリア",
@@ -1284,6 +1286,7 @@ export const ja: TranslationResources = {
       noHost: "ホストなし",
       switchTitle: "ホストを切り替え",
       searchPlaceholder: "ホストを検索...",
+      noMatches: "一致するホストがありません",
     },
     actions: {
       addProject: "プロジェクトを追加",
@@ -3205,6 +3208,43 @@ export const ja: TranslationResources = {
         saving: "保存中...",
         cancel: "キャンセル",
       },
+    },
+  },
+  phone: {
+    speech: {
+      title: "返信を読み上げ",
+      enabled: "完成した返信を読み上げる",
+      hint: "今見ているチャットで、書き終わったアシスタントの返信だけを読みます。オフにするとすぐに止まります。",
+      privacy:
+        "読み上げは端末のスピーカーでアシスタントの返信を再生します。近くの人に聞こえます。返信本文はログに書きません。オフラインの簡体字中国語音声を使い、アプリを離れるか画面をロックすると止まります。",
+      replay: "読み上げ",
+      stop: "停止",
+      missingTitle: "オフライン中国語音声がありません",
+      missing:
+        "この端末にはオフラインの簡体字中国語音声がありません。システムのテキスト読み上げ設定でインストールしてから再試行してください。ネットワーク音声や有料サービスには切り替えません。",
+      nothingToRead: "この返信には読み上げる本文がありません。",
+      failed: "この返信を読み上げられませんでした。{{detail}}",
+    },
+    markdown: {
+      edit: "編集",
+      preview: "プレビュー",
+      saveAs: "端末に保存",
+      saving: "保存中…",
+      saved: "この端末に保存しました",
+      cancelled: "保存をキャンセルしました。編集内容は残っています。",
+      failed: "端末に保存できませんでした。編集内容は残っています。{{detail}}",
+      busy: "保存ウィンドウが既に開いています。編集内容は残っています。",
+      unavailable: "システムの保存ウィンドウを開けません。編集内容は残っています。",
+      remoteChanged: "ホスト上のファイルが変わりました。未保存の編集は残っています。",
+      fallbackName: "notes.md",
+    },
+    diagnostics: {
+      summary: "ホストが診断情報を返しました",
+      detail: "ホストの原文：{{detail}}",
+    },
+    about: {
+      title: "個人ビルド",
+      body: "非公式の個人ビルドです。公式の Paseo と同時にインストールできます。Paseo 0.16.2 が基で、元のライセンスが適用されます。通知タイトルは 0.16.2 のホストが書くため英語のままのことがあります。",
     },
   },
 } as const;

@@ -304,6 +304,8 @@ export const ptBR: TranslationResources = {
     tooManyMatches: "Muitos resultados — refine a busca",
     hostLoadFailed: "{{host}}: Não foi possível carregar o histórico",
     searchPlaceholder: "Buscar no histórico",
+    loadFailed: "Não foi possível carregar as sessões",
+    tryAgain: "Tentar de novo",
     actions: {
       loadMore: "Carregar mais",
       clearSearch: "Limpar busca",
@@ -1296,6 +1298,7 @@ export const ptBR: TranslationResources = {
       noHost: "Nenhum host",
       switchTitle: "Trocar host",
       searchPlaceholder: "Buscar hosts...",
+      noMatches: "Nenhum host correspondente",
     },
     actions: {
       addProject: "Adicionar projeto",
@@ -3218,6 +3221,44 @@ export const ptBR: TranslationResources = {
         saving: "Salvando...",
         cancel: "Cancelar",
       },
+    },
+  },
+  phone: {
+    speech: {
+      title: "Ler respostas",
+      enabled: "Ler respostas concluídas",
+      hint: "Lê apenas a resposta concluída do assistente no chat que você está vendo. Desligar interrompe na hora.",
+      privacy:
+        "A leitura sai pelo alto-falante deste telefone. Quem estiver perto pode ouvir. O texto da resposta não vai para os registros. Usa a voz chinesa offline e para quando você sai do app ou bloqueia a tela.",
+      replay: "Ler",
+      stop: "Parar",
+      missingTitle: "Voz chinesa offline ausente",
+      missing:
+        "Este telefone não tem voz de chinês simplificado offline. Instale uma nas configurações de conversão de texto em fala e tente de novo. O app não muda para voz de rede nem serviço pago.",
+      nothingToRead: "Esta resposta não tem prosa para ler.",
+      failed: "Não foi possível ler esta resposta. {{detail}}",
+    },
+    markdown: {
+      edit: "Editar",
+      preview: "Prévia",
+      saveAs: "Salvar no telefone",
+      saving: "Salvando…",
+      saved: "Salvo neste telefone",
+      cancelled: "Salvamento cancelado. Suas edições continuam aqui.",
+      failed: "Não foi possível salvar no telefone. Suas edições continuam aqui. {{detail}}",
+      busy: "Já existe uma janela de salvamento aberta. Suas edições continuam aqui.",
+      unavailable:
+        "A janela de salvamento do sistema não está disponível. Suas edições continuam aqui.",
+      remoteChanged: "A cópia no host mudou. Suas edições não salvas continuam aqui.",
+      fallbackName: "notes.md",
+    },
+    diagnostics: {
+      summary: "O host retornou um diagnóstico",
+      detail: "Mensagem original do host: {{detail}}",
+    },
+    about: {
+      title: "Build pessoal",
+      body: "Build pessoal não oficial. Pode ser instalado ao lado do Paseo oficial. Baseado no Paseo 0.16.2; a licença original continua valendo. Os títulos das notificações vêm do host 0.16.2 e podem continuar em inglês.",
     },
   },
 };

@@ -184,9 +184,9 @@ function SessionsScreenContent() {
       ) : null}
       {!isInitialLoad && showLoadError ? (
         <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>Unable to load sessions</Text>
+          <Text style={styles.emptyText}>{t("sessions.loadFailed")}</Text>
           <Button variant="ghost" onPress={handleRefresh}>
-            Try again
+            {t("sessions.tryAgain")}
           </Button>
         </View>
       ) : null}
